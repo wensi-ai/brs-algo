@@ -96,7 +96,7 @@ class WBVIMAPolicy(BaseDiffusionPolicy):
         )
         self.action_decoder = WholeBodyUNetDiffusionHead(
             whole_body_decoding_order=["mobile_base", "torso", "arms"],
-            action_dim_per_part={"mobile_base": 3, "torso": 4, "arms": 14},
+            action_dim_per_part={"mobile_base": 3, "torso": 4, "arms": 16},
             obs_dim=xf_n_embd,
             action_horizon=action_prediction_horizon,
             diffusion_step_embed_dim=diffusion_step_embed_dim,
@@ -254,10 +254,10 @@ class WBVIMAPolicy(BaseDiffusionPolicy):
         return {
             "mobile_base": pred["mobile_base"],
             "torso": pred["torso"],
-            "left_arm": pred["arms"][..., :6],
-            "left_gripper": pred["arms"][..., 6:7],
-            "right_arm": pred["arms"][..., 7:13],
-            "right_gripper": pred["arms"][..., 13:14],
+            "left_arm": pred["arms"][..., :7],
+            "left_gripper": pred["arms"][..., 7:8],
+            "right_arm": pred["arms"][..., 8:15],
+            "right_gripper": pred["arms"][..., 15:16],
         }
 
     @torch.no_grad()
